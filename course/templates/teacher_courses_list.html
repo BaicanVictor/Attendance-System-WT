@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+<body>
+{% include "navbar.html" %}
+<div style="margin: 35px 35px 35px 35px">
+    <h2>Your courses</h2>
+    {% if user.is_teacher %}
+        <a href="/add-course" style="margin-bottom: 20px" type="button" class="btn btn-success">Add course</a>
+    {% endif %}
+    <div style="display: flex; flex-wrap: wrap">
+        {% for course in courses %}
+            <div class="card" style="width: 18rem; margin-right: 10px">
+                <div class="card-body">
+                    <h5 class="card-title">{{course.name}}</h5>
+                    <p class="card-text">{{course.description}}</p>
+                    <a href="/class/{{course.id}}" class="btn btn-primary">See classes</a>
+                    <a href="/class/{{course.id}}" class="btn btn-danger mt-1 mt-sm-0">Participants</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

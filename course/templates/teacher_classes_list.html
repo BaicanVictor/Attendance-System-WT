@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+<body>
+{% include "navbar.html" %}
+<div style="margin: 35px 35px 35px 35px">
+    <h2>{{course.name}} classes</h2>
+    {% if user.is_teacher %}
+    <a href="/add-class/{{course.id}}" style="margin-bottom: 20px" type="button" class="btn btn-success">Add class</a>
+    {% endif %}
+    <div style="overflow: scroll">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Starting at</th>
+            <th scope="col">Ending at</th>
+            {% if request.user.is_teacher %}
+                <th scope="col">Participants</th>
+                <th scope="col">Attendances</th>
+            {% else %}
+                <th scope="col">Attendance</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for class in classes %}
+        <tr>
+            <th scope="row">{{class.id}}</th>
+            <td>{{class.starting_at}}</td>
+            <td>{{class.ending_at}}</td>
+            {% if request.user.is_teacher %}
+                <td><a href="/participants/{{class.id}}">View participants</a></td>
+                <td><a href="/attendences/{{class.id}}">View attendances</a></td>
+            {% else %}
+                <td><a href="/add-attendance/{{class.id}}">Set Attendance</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+</body>
+</html>
